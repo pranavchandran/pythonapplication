@@ -9,7 +9,14 @@ pipeline {
                     //This image parameter (of the agent section’s docker parameter) downloads the python:2-alpine
                     //Docker image and runs this image as a separate container. The Python container becomes
                     //the agent that Jenkins uses to run the Build stage of your Pipeline project.
-                    image 'python:2-alpine'
+                    FROM alpine:latest
+
+                    RUN apk add --no-cache --update python3
+
+                    RUN python3 -m ensurepip
+                    RUN pip3 install --upgrade pip
+
+                    RUN pip3 install pylint==2.0.0
                 }
             }
             steps {
